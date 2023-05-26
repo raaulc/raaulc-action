@@ -1,0 +1,7 @@
+{
+  "name": "raaulc-action",
+  "version": "1.0.4",
+  "dependencies": {
+    "@actions/core": "^1.5.0"
+  }
+}

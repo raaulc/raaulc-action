@@ -1,8 +1,0 @@
-{
-    "name": "raaulc-action",
-    "version": "1.0.3",
-    "dependencies": {
-      "@actions/core": "^1.2.6"
-    }
-  }
-  

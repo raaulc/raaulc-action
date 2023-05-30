@@ -15,13 +15,16 @@ try {
   const githubActionUrl = `https://github.com/${githubRepo}/actions/runs/${githubRunId}`;
   const githubCommitUrl = `https://github.com/${githubRepo}/commit/${process.env.GITHUB_SHA}`;
   const payload = {
-    text: slackMessage,
+    username: 'rahul-action-bot',
+    icon_url: 'https://example.com/user-photo.png', // Replace with the actual user photo URL
     attachments: [
       {
+        color: 'good', // Use 'good' for green color
+        author_name: 'raaulc',
         fields: [
           {
-            title: 'Branch Name',
-            value: branchName,
+            title: 'Ref',
+            value: `refs/heads/${branchName}`,
             short: true,
           },
           {
@@ -30,21 +33,22 @@ try {
             short: true,
           },
           {
-            title: 'Commit ID',
+            title: 'Actions URL',
+            value: `<${githubActionUrl}|ci-pipeline>`,
+            short: true,
+          },
+          {
+            title: 'Commit',
             value: `<${githubCommitUrl}|${commitId}>`,
             short: true,
           },
           {
-            title: 'Commit Message',
-            value: commitMsg,
-            short: true,
-          },
-          {
-            title: 'Actions URL',
-            value: `<${githubActionUrl}|${process.env.GITHUB_WORKFLOW}>`,
-            short: true,
+            title: 'Message',
+            value: slackMessage,
+            short: false,
           },
         ],
+        footer: 'Powered By rtCamp\'s GitHub Actions Library',
       },
     ],
   };

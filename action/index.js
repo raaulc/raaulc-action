@@ -15,7 +15,7 @@ async function run() {
     const githubRunId = process.env.GITHUB_RUN_ID;
     const githubActionUrl = `https://github.com/${githubRepo}/actions/runs/${githubRunId}`;
     const githubCommitUrl = `https://github.com/${githubRepo}/commit/${process.env.GITHUB_SHA}`;
-    const giphyApiKey = process.env.GIPHY_API_KEY; // Add your Giphy API key here
+    const giphyApiKey = "nP4SvtCMSp9XMUTtyW9WquXQfTFka5Aj"; // Add your Giphy API key here
     const giphyUrl = `https://api.giphy.com/v1/gifs/random?api_key=${giphyApiKey}&tag=office`; // Customize the tag as per your preference
     // Fetch a random GIF from Giphy
     const response = await axios.get(giphyUrl);

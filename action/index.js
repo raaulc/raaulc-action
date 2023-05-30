@@ -1,31 +1,3 @@
-name: slack-notification
-on:
-  push:
-    branches:
-      - main
-jobs:
-  slack-notification:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Get Author Information
-        id: author-info
-        run: |
-          echo "::set-env name=COMMIT_AUTHOR::$(git show -s --format='%an')"
-          echo "::set-env name=COMMIT_EMAIL::$(git show -s --format='%ae')"
-          echo "::set-env name=COMMIT_MESSAGE::$(git show -s --format='%s')"
-          echo "::set-env name=COMMIT_EVENT::${{ github.event_name }}"
-          echo "::set-env name=COMMIT_ID::${{ github.sha }}"
-          echo "::set-env name=COMMIT_AVATAR_URL::$(curl -s -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/users/$(git show -s --format='%an') | jq -r '.avatar_url')"
-      - name: Post to Slack
-        run: |
-          export SLACK_WEBHOOK=${{ secrets.SLACK_WEBHOOK }}
-          export SLACK_MESSAGE="Author: $COMMIT_AUTHOR\nBranch: ${{ github.ref }}\nCommit Message: $COMMIT_MESSAGE\nEvent: $COMMIT_EVENT\nCommit ID: $COMMIT_ID"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\": \"${SLACK_MESSAGE}\", \"attachments\": [{\"image_url\":\"$COMMIT_AVATAR_URL\"}]}" ${SLACK_WEBHOOK}
-12:56
------------------
-12:56
 const core = require('@actions/core');
 const axios = require('axios');
 async function getGitHubUserInfo() {
@@ -84,11 +56,6 @@ try {
               title: 'Commit',
               value: `<${githubCommitUrl}|${commitId}>`,
               short: true,
-            },
-            {
-              title: 'Message',
-              value: slackMessage,
-              short: false,
             },
           ],
           footer: "Powered By rtCamp's GitHub Actions Library",

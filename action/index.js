@@ -20,6 +20,7 @@ async function run() {
     // Fetch a random GIF from Giphy
     const response = await axios.get(giphyUrl);
     const gifUrl = response.data.data.image_url;
+    console.log(gifUrl);
     const payload = {
       username: 'rahul-action-bot',
       icon_url: 'https://example.com/user-photo.png', // Replace with the actual user photo URL
@@ -54,7 +55,7 @@ async function run() {
               short: false,
             },
           ],
-          footer: "Powered By rtCamp's GitHub Actions Library",
+          footer: "Powered By raaulc's GitHub Actions Library",
         },
         {
           image_url: gifUrl, // Add the Giphy GIF URL here

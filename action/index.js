@@ -19,7 +19,7 @@ async function run() {
     const giphyUrl = `https://api.giphy.com/v1/gifs/random?api_key=${giphyApiKey}&tag=office`; // Customize the tag as per your preference
     // Fetch a random GIF from Giphy
     const response = await axios.get(giphyUrl);
-    const gifUrl = response.data.data.images.fixed_height.url;
+    const gifUrl = response.data.data.images.fixed_width_small.url;
     console.log("gifUrl" + gifUrl);
     const payload = {
       username: 'rahul-action-bot',

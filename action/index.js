@@ -5,19 +5,21 @@ async function run() {
     const slackWebhook = process.env.SLACK_WEBHOOK;
     const slackMessage = process.env.SLACK_MESSAGE;
     const authorName = process.env.GITHUB_ACTOR;
-    const commitId = process.env.GITHUB_SHA.slice(0, 4); // Shorten commit ID to 4 digits
+    const commitId = process.env.GITHUB_SHA.slice(0, 4); 
     const commitMsg = process.env.GITHUB_EVENT_PATH
       ? require(process.env.GITHUB_EVENT_PATH).head_commit.message
       : '';
-    const branchName = process.env.GITHUB_REF.split('/').slice(2).join('/'); // Extract branch name from GITHUB_REF
+    const branchName = process.env.GITHUB_REF.split('/').slice(2).join('/');
     const eventName = process.env.GITHUB_EVENT_NAME;
     const githubRepo = process.env.GITHUB_REPOSITORY;
     const githubRunId = process.env.GITHUB_RUN_ID;
     const githubActionUrl = `https://github.com/${githubRepo}/actions/runs/${githubRunId}`;
     const githubCommitUrl = `https://github.com/${githubRepo}/commit/${process.env.GITHUB_SHA}`;
+    const logoPath = path.join(__dirname, '../logo.png'); 
+    
     const payload = {
       username: 'rahul-action-bot',
-      icon_url: 'https://example.com/user-photo.png', // Replace with the actual user photo URL
+      icon_url: `file://${logoPath}`,
       attachments: [
         {
           color: 'good', // Use 'good' for green color

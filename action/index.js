@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const axios = require('axios');
+const path = require('path');
 async function run() {
   try {
     const slackWebhook = process.env.SLACK_WEBHOOK;

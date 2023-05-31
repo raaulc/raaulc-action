@@ -58,8 +58,7 @@ async function run() {
           footer: "Powered By raaulc's GitHub Actions Library",
         },
         {
-          text: gifUrl,
-          image_url: gifUrl, // Add the Giphy GIF URL here
+          text: `You can view the GIF [here](${gifUrl}).`, // Add the GIF URL here
         },
       ],
     };

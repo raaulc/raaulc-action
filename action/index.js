@@ -1,29 +1,31 @@
+const path = require('path');
 const core = require('@actions/core');
 const axios = require('axios');
-const path = require('path');
 async function run() {
   try {
     const slackWebhook = process.env.SLACK_WEBHOOK;
     const slackMessage = process.env.SLACK_MESSAGE;
     const authorName = process.env.GITHUB_ACTOR;
-    const commitId = process.env.GITHUB_SHA.slice(0, 4); 
+    const commitId = process.env.GITHUB_SHA.slice(0, 4); // Shorten commit ID to 4 digits
     const commitMsg = process.env.GITHUB_EVENT_PATH
       ? require(process.env.GITHUB_EVENT_PATH).head_commit.message
       : '';
-    const branchName = process.env.GITHUB_REF.split('/').slice(2).join('/');
+    const branchName = process.env.GITHUB_REF.split('/').slice(2).join('/'); // Extract branch name from GITHUB_REF
     const eventName = process.env.GITHUB_EVENT_NAME;
     const githubRepo = process.env.GITHUB_REPOSITORY;
     const githubRunId = process.env.GITHUB_RUN_ID;
     const githubActionUrl = `https://github.com/${githubRepo}/actions/runs/${githubRunId}`;
     const githubCommitUrl = `https://github.com/${githubRepo}/commit/${process.env.GITHUB_SHA}`;
-    const logoPath = path.join(__dirname, '../logo.png'); 
-    
+    const logoPath = path.join(__dirname, '../logo.png'); // Adjust the path based on the actual location of the logo
+    // Determine build status
+    const buildStatus = core.getInput('build_status');
+    core.setOutput('build_status', buildStatus);
     const payload = {
       username: 'rahul-action-bot',
-      icon_url: `file://${logoPath}`,
+      icon_url: `file://${logoPath}`, // Use the logoPath variable to specify the custom photo
       attachments: [
         {
-          color: 'good', // Use 'good' for green color
+          color: buildStatus === 'success' ? 'good' : 'danger',
           author_name: authorName,
           fields: [
             {
@@ -50,6 +52,11 @@ async function run() {
               title: 'Message',
               value: slackMessage,
               short: false,
+            },
+            {
+              title: 'Build Status',
+              value: buildStatus === 'success' ? 'Passed' : 'Failed',
+              short: true,
             },
           ],
           footer: "Powered By raaulc's GitHub Actions Library",
